@@ -1,21 +1,36 @@
 import React, {Component} from 'react';
 import ApiService from '../../ApiService';
-import NewsItem from './NewsItem';
 import styled from 'styled-components';
 
 const NewsItemBlock = styled.div`
-  box-sizing: border-box;
-  padding-bottom: 3rem;
-  width: 768px;
-  margin: 0 auto;
-  margin-top: 2rem;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+	display: flex;
+	.thumbnail {
+		margin-right: 1rem;
+		img {
+			display: block;
+			width: 160px;
+			height: 100px;
+			object-fit: cover;
+		}
+	}
+	.contents {
+		h2 {
+			margin: 0;
+			a {
+				color: black;
+			}
+		}
+		p {
+			margin: 0;
+			line-height: 1.5;
+			margin-top: 0.5rem;
+			white-space: normal;
+		}
+	}
+	& + & {
+		margin-top: 3rem;
+	}
 `;
-
 
 class NewsListComponent extends Component{
 	constructor(props){
@@ -45,21 +60,19 @@ class NewsListComponent extends Component{
 	render(){
 
 		return(
-		<NewsItemBlock>
-			<h2>News List</h2>
-				<body>
+			<NewsItemBlock>
+			<table>
+				<tbody>
 					{this.state.newses.map(news =>
-						<tr>
-							<td>{news.newsFile}</td>
-							<td>{news.newsNo}번</td>
-							<td><h3>{news.newsTitle}</h3></td>
-							<td>{news.newsContents}</td>
-						</tr>
-						)}
-				</body>
+						<tr key={news.url}  >
+							<td>{news.urlToImage}</td>
+							<h2>{news.title}</h2>
+							<p>{news.description}</p>
+							</tr>
+							)}
+				</tbody>
+			</table>
 		</NewsItemBlock>
-		
-				
 		)
 	}
 }
